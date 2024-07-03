@@ -148,18 +148,16 @@ namespace Trivia
                 if (this._players[currentPlayer].CanGetOutOfPenaltyBox())
                 {
                     Console.WriteLine("Answer was correct!!!!");
-                    currentPlayer++;
-                    if (currentPlayer == this._players.Count) currentPlayer = 0;
+                    this.GiveTurnToNextPlayer();
                     this._players[currentPlayer].AddPurse();
 
                     bool winner = this._players[currentPlayer].DidPlayerWin();
-                    
+
                     return winner;
                 }
                 else
                 {
-                    currentPlayer++;
-                    if (currentPlayer == this._players.Count) currentPlayer = 0;
+                    this.GiveTurnToNextPlayer();
                     return true;
                 }
 
@@ -173,11 +171,16 @@ namespace Trivia
                 this._players[currentPlayer].AddPurse();
 
                 bool winner = this._players[currentPlayer].DidPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == this._players.Count) currentPlayer = 0;
+                this.GiveTurnToNextPlayer();
 
                 return winner;
             }
+        }
+
+        private void GiveTurnToNextPlayer()
+        {
+            currentPlayer++;
+            if (currentPlayer == this._players.Count) currentPlayer = 0;
         }
 
         public bool WrongAnswer()
@@ -186,8 +189,7 @@ namespace Trivia
             Console.WriteLine(this._players[currentPlayer].Name + " was sent to the penalty box");
             this._players[currentPlayer].PutInPenaltyBox();
 
-            currentPlayer++;
-            if (currentPlayer == this._players.Count) currentPlayer = 0;
+            this.GiveTurnToNextPlayer();
             return true;
         }
     }
