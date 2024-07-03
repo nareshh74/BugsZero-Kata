@@ -8,6 +8,7 @@ namespace trivia
         private int _place;
         private int _purse;
         private bool _inPenaltyBox;
+        private bool _isGettingOutOfPenaltyBox;
 
         public string Name { get => this._name; }
 
@@ -33,6 +34,18 @@ namespace trivia
         {
             this._inPenaltyBox = false;
         }
+
+        public void MightGetOutOfPenaltyBox()
+        {
+            this._isGettingOutOfPenaltyBox = true;
+        }
+
+        public void CantGetOutOfPenaltyBox()
+        {
+            this._isGettingOutOfPenaltyBox = false;
+        }
+
+        public bool CanGetOutOfPenaltyBox() => this._isGettingOutOfPenaltyBox;
 
         public void Move(int roll)
         {

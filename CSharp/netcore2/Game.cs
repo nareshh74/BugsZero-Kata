@@ -15,7 +15,6 @@ namespace Trivia
         private LinkedList<string> rockQuestions = new LinkedList<string>();
 
         private int currentPlayer = 0;
-        private bool isGettingOutOfPenaltyBox;
 
         private Game()
         {
@@ -76,18 +75,18 @@ namespace Trivia
             {
                 if (roll % 2 != 0)
                 {
-                    isGettingOutOfPenaltyBox = true;
+                    this._players[currentPlayer].MightGetOutOfPenaltyBox();
 
                     Console.WriteLine(this._players[currentPlayer].Name + " is getting out of the penalty box");
                     this._players[currentPlayer].Move(roll);
 
-                    Console.WriteLine("The category is " + CurrentCategory());
-                    AskQuestion();
+                    Console.WriteLine("The category is " + this.CurrentCategory());
+                    this.AskQuestion();
                 }
                 else
                 {
                     Console.WriteLine(this._players[currentPlayer].Name + " is not getting out of the penalty box");
-                    isGettingOutOfPenaltyBox = false;
+                    this._players[currentPlayer].CantGetOutOfPenaltyBox();
                 }
 
             }
@@ -96,30 +95,30 @@ namespace Trivia
 
                 this._players[currentPlayer].Move(roll);
 
-                Console.WriteLine("The category is " + CurrentCategory());
-                AskQuestion();
+                Console.WriteLine("The category is " + this.CurrentCategory());
+                this.AskQuestion();
             }
 
         }
 
         private void AskQuestion()
         {
-            if (CurrentCategory() == "Pop")
+            if (this.CurrentCategory() == "Pop")
             {
                 Console.WriteLine(popQuestions.First());
                 popQuestions.RemoveFirst();
             }
-            if (CurrentCategory() == "Science")
+            if (this.CurrentCategory() == "Science")
             {
                 Console.WriteLine(scienceQuestions.First());
                 scienceQuestions.RemoveFirst();
             }
-            if (CurrentCategory() == "Sports")
+            if (this.CurrentCategory() == "Sports")
             {
                 Console.WriteLine(sportsQuestions.First());
                 sportsQuestions.RemoveFirst();
             }
-            if (CurrentCategory() == "Rock")
+            if (this.CurrentCategory() == "Rock")
             {
                 Console.WriteLine(rockQuestions.First());
                 rockQuestions.RemoveFirst();
@@ -146,7 +145,7 @@ namespace Trivia
         {
             if (this._players[currentPlayer].IsInPenaltyBox())
             {
-                if (isGettingOutOfPenaltyBox)
+                if (this._players[currentPlayer].CanGetOutOfPenaltyBox())
                 {
                     Console.WriteLine("Answer was correct!!!!");
                     currentPlayer++;
