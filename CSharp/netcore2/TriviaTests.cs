@@ -5,6 +5,7 @@ using Xunit;
 using Assent;
 using Assent.Reporters;
 using Assent.Reporters.DiffPrograms;
+using System.Collections.Generic;
 
 namespace Trivia
 {
@@ -16,11 +17,9 @@ namespace Trivia
             var output = new StringBuilder();
             Console.SetOut(new StringWriter(output));
 
-            Game aGame = new Game();
+            var players = new List<string> { "Chet", "Pat", "Sue" };
+            Game aGame = new Game(players);
             Console.WriteLine(aGame.IsPlayable());
-            aGame.Add("Chet");
-            aGame.Add("Pat");
-            aGame.Add("Sue");
 
             aGame.Roll(1);
             aGame.Roll(1);

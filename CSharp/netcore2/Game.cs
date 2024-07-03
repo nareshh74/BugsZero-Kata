@@ -23,7 +23,7 @@ namespace Trivia
         int currentPlayer = 0;
         bool isGettingOutOfPenaltyBox;
 
-        public Game()
+        private Game()
         {
             for (int i = 0; i < 50; i++)
             {
@@ -31,6 +31,18 @@ namespace Trivia
                 scienceQuestions.AddLast(("Science Question " + i));
                 sportsQuestions.AddLast(("Sports Question " + i));
                 rockQuestions.AddLast(CreateRockQuestion(i));
+            }
+        }
+
+        public Game(List<string> players) : this()
+        {
+            if (players.Count() < 2)
+            {
+                throw new ArgumentException("You need at least 2 players to play the game");
+            }
+            foreach (var player in players)
+            {
+                this.Add(player);
             }
         }
 
