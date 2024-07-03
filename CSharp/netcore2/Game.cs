@@ -40,6 +40,10 @@ namespace Trivia
             {
                 throw new ArgumentException("You need at least 2 players to play the game");
             }
+            if (players.Count() > 6)
+            {
+                throw new ArgumentException("You need at most 6 players to play the game");
+            }
             foreach (var player in players)
             {
                 this.Add(player);
