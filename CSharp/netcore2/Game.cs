@@ -9,13 +9,13 @@ namespace Trivia
     {
         private readonly List<Player> _players;
 
-        LinkedList<string> popQuestions = new LinkedList<string>();
-        LinkedList<string> scienceQuestions = new LinkedList<string>();
-        LinkedList<string> sportsQuestions = new LinkedList<string>();
-        LinkedList<string> rockQuestions = new LinkedList<string>();
+        private LinkedList<string> popQuestions = new LinkedList<string>();
+        private LinkedList<string> scienceQuestions = new LinkedList<string>();
+        private LinkedList<string> sportsQuestions = new LinkedList<string>();
+        private LinkedList<string> rockQuestions = new LinkedList<string>();
 
-        int currentPlayer = 0;
-        bool isGettingOutOfPenaltyBox;
+        private int currentPlayer = 0;
+        private bool isGettingOutOfPenaltyBox;
 
         private Game()
         {
@@ -47,7 +47,7 @@ namespace Trivia
             }
         }
 
-        public String CreateRockQuestion(int index)
+        private String CreateRockQuestion(int index)
         {
             return "Rock Question " + index;
         }
@@ -57,7 +57,7 @@ namespace Trivia
             return (this._players.Count >= 2);
         }
 
-        public bool Add(String playerName)
+        private bool Add(String playerName)
         {
 
             this._players.Add(new Player(playerName));
