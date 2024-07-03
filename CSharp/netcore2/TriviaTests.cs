@@ -64,26 +64,27 @@ namespace Trivia
         {
             return 
                 new Configuration()
-                
-            // Uncomment this block if an exception 
-            // « Could not find a diff program to use »
-            // is thrown and if you have VsCode installed.
-            // Otherwise, use other DiffProgram with its full path
-            // as parameter.
-            // See  https://github.com/droyad/Assent/wiki/Reporting
-//                    .UsingReporter(
-//                        new DiffReporter(
-//                            new []
-//                            {
+
+                    // Uncomment this block if an exception 
+                    // « Could not find a diff program to use »
+                    // is thrown and if you have VsCode installed.
+                    // Otherwise, use other DiffProgram with its full path
+                    // as parameter.
+                    // See  https://github.com/droyad/Assent/wiki/Reporting
+                    .UsingReporter(
+                        new DiffReporter(
+                            new[]
+                            {
                                 // For linux
-//                                new VsCodeDiffProgram(new []
-//                                {
-//                                    "/usr/bin/code"
-//                                })
-                
+                                //new VsCodeDiffProgram(new []
+                                //{
+                                //    "/usr/bin/code"
+                                //})
+
+
                                 // For Windows
-//                                new VsCodeDiffProgram(), 
-//                            }))
+                                new VsCodeDiffProgram(),
+                            }))
                 ;
         }
     }
