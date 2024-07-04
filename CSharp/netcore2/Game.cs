@@ -13,7 +13,7 @@ namespace Trivia
         private Game()
         {
             Questions.PrepareQuestions();
-            }
+        }
 
         public Game(List<string> players) : this()
         {
@@ -54,39 +54,24 @@ namespace Trivia
             Console.WriteLine(this._players[currentPlayer].Name + " is the current player");
             Console.WriteLine("They have rolled a " + roll);
 
+            if (this._players[currentPlayer].IsInPenaltyBox() && roll % 2 == 0)
+            {
+                Console.WriteLine(this._players[currentPlayer].Name + " is not getting out of the penalty box");
+                this._players[currentPlayer].CantGetOutOfPenaltyBox();
+                return;
+            }
+
             if (this._players[currentPlayer].IsInPenaltyBox())
             {
-                if (roll % 2 != 0)
-                {
-                    this._players[currentPlayer].MightGetOutOfPenaltyBox();
-
-                    Console.WriteLine(this._players[currentPlayer].Name + " is getting out of the penalty box");
-                    this._players[currentPlayer].Move(roll);
-
-                    Console.WriteLine("The category is " + this.CurrentCategory());
-                    this.AskQuestion();
-                }
-                else
-                {
-                    Console.WriteLine(this._players[currentPlayer].Name + " is not getting out of the penalty box");
-                    this._players[currentPlayer].CantGetOutOfPenaltyBox();
-                }
-
-            }
-            else
-            {
-
-                this._players[currentPlayer].Move(roll);
-
-                Console.WriteLine("The category is " + this.CurrentCategory());
-                this.AskQuestion();
+                this._players[currentPlayer].MightGetOutOfPenaltyBox();
+                Console.WriteLine(this._players[currentPlayer].Name + " is getting out of the penalty box");
             }
 
-        }
+            this._players[currentPlayer].Move(roll);
 
-        private void AskQuestion()
-        {
+            Console.WriteLine("The category is " + this.CurrentCategory());
             Questions.Ask(this.CurrentCategory());
+
         }
 
 
