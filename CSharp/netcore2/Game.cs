@@ -98,6 +98,8 @@ namespace Trivia
                 return true;
             }
 
+            this._players[currentPlayer].TakeOutOfPenaltyBox();
+
             Console.WriteLine("Answer was correct!!!!");
             this._players[currentPlayer].AddPurse();
 
