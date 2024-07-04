@@ -74,7 +74,7 @@ namespace trivia
                             + " Gold Coins.");
         }
 
-        public bool DidPlayerWin()
+        public bool YetToWin()
         {
             return this._purse != 6;
         }

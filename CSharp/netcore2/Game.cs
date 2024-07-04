@@ -92,38 +92,18 @@ namespace Trivia
 
         public bool WasCorrectlyAnswered()
         {
-            if (this._players[currentPlayer].IsInPenaltyBox())
+            if (this._players[currentPlayer].IsInPenaltyBox() && !this._players[currentPlayer].CanGetOutOfPenaltyBox())
             {
-                if (this._players[currentPlayer].CanGetOutOfPenaltyBox())
-                {
-                    Console.WriteLine("Answer was correct!!!!");
-                    this.GiveTurnToNextPlayer();
-                    this._players[currentPlayer].AddPurse();
-
-                    bool winner = this._players[currentPlayer].DidPlayerWin();
-
-                    return winner;
-                }
-                else
-                {
-                    this.GiveTurnToNextPlayer();
-                    return true;
-                }
-
-
-
-            }
-            else
-            {
-
-                Console.WriteLine("Answer was corrent!!!!");
-                this._players[currentPlayer].AddPurse();
-
-                bool winner = this._players[currentPlayer].DidPlayerWin();
                 this.GiveTurnToNextPlayer();
-
-                return winner;
+                return true;
             }
+
+            Console.WriteLine("Answer was correct!!!!");
+            this._players[currentPlayer].AddPurse();
+
+            this.GiveTurnToNextPlayer();
+
+            return this._players[currentPlayer].YetToWin();
         }
 
         private void GiveTurnToNextPlayer()
