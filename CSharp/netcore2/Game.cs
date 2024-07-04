@@ -8,7 +8,7 @@ namespace Trivia
     {
         private readonly List<Player> _players;
 
-        private int currentPlayer = 0;
+        private int _currentPlayerIndex = 0;
 
         private Game()
         {
@@ -51,23 +51,23 @@ namespace Trivia
 
         public void Roll(int roll)
         {
-            Console.WriteLine(this._players[currentPlayer] + " is the current player");
+            Console.WriteLine(this._players[_currentPlayerIndex] + " is the current player");
             Console.WriteLine("They have rolled a " + roll);
 
-            if (this._players[currentPlayer].IsInPenaltyBox() && roll % 2 == 0)
+            if (this._players[_currentPlayerIndex].IsInPenaltyBox() && roll % 2 == 0)
             {
-                Console.WriteLine(this._players[currentPlayer] + " is not getting out of the penalty box");
-                this._players[currentPlayer].CantGetOutOfPenaltyBox();
+                Console.WriteLine(this._players[_currentPlayerIndex] + " is not getting out of the penalty box");
+                this._players[_currentPlayerIndex].CantGetOutOfPenaltyBox();
                 return;
             }
 
-            if (this._players[currentPlayer].IsInPenaltyBox())
+            if (this._players[_currentPlayerIndex].IsInPenaltyBox())
             {
-                this._players[currentPlayer].MightGetOutOfPenaltyBox();
-                Console.WriteLine(this._players[currentPlayer] + " is getting out of the penalty box");
+                this._players[_currentPlayerIndex].MightGetOutOfPenaltyBox();
+                Console.WriteLine(this._players[_currentPlayerIndex] + " is getting out of the penalty box");
             }
 
-            this._players[currentPlayer].Move(roll);
+            this._players[_currentPlayerIndex].Move(roll);
 
             Console.WriteLine("The category is " + this.CurrentCategory());
             Questions.Ask(this.CurrentCategory());
@@ -77,7 +77,7 @@ namespace Trivia
 
         private String CurrentCategory()
         {
-            int currentPlayerPlace = this._players[currentPlayer].GetPlace();
+            int currentPlayerPlace = this._players[_currentPlayerIndex].GetPlace();
             if (currentPlayerPlace == 0) return "Pop";
             if (currentPlayerPlace == 4) return "Pop";
             if (currentPlayerPlace == 8) return "Pop";
@@ -92,33 +92,33 @@ namespace Trivia
 
         public bool WasCorrectlyAnswered()
         {
-            if (this._players[currentPlayer].IsInPenaltyBox() && !this._players[currentPlayer].CanGetOutOfPenaltyBox())
+            if (this._players[_currentPlayerIndex].IsInPenaltyBox() && !this._players[_currentPlayerIndex].CanGetOutOfPenaltyBox())
             {
                 this.GiveTurnToNextPlayer();
                 return true;
             }
 
-            this._players[currentPlayer].TakeOutOfPenaltyBox();
+            this._players[_currentPlayerIndex].TakeOutOfPenaltyBox();
 
             Console.WriteLine("Answer was correct!!!!");
-            this._players[currentPlayer].AddPurse();
+            this._players[_currentPlayerIndex].AddPurse();
 
             this.GiveTurnToNextPlayer();
 
-            return this._players[currentPlayer].YetToWin();
+            return this._players[_currentPlayerIndex].YetToWin();
         }
 
         private void GiveTurnToNextPlayer()
         {
-            currentPlayer++;
-            if (currentPlayer == this._players.Count) currentPlayer = 0;
+            _currentPlayerIndex++;
+            if (_currentPlayerIndex == this._players.Count) _currentPlayerIndex = 0;
         }
 
         public bool WrongAnswer()
         {
             Console.WriteLine("Question was incorrectly answered");
-            Console.WriteLine(this._players[currentPlayer] + " was sent to the penalty box");
-            this._players[currentPlayer].PutInPenaltyBox();
+            Console.WriteLine(this._players[_currentPlayerIndex] + " was sent to the penalty box");
+            this._players[_currentPlayerIndex].PutInPenaltyBox();
 
             this.GiveTurnToNextPlayer();
             return true;
