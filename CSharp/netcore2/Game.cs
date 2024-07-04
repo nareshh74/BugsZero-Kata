@@ -51,23 +51,24 @@ namespace Trivia
 
         public void Roll(int roll)
         {
-            Console.WriteLine(this._players[_currentPlayerIndex] + " is the current player");
+            var currentPlayer = this._players[_currentPlayerIndex];
+            Console.WriteLine(currentPlayer + " is the current player");
             Console.WriteLine("They have rolled a " + roll);
 
-            if (this._players[_currentPlayerIndex].IsInPenaltyBox() && roll % 2 == 0)
+            if (currentPlayer.IsInPenaltyBox() && roll % 2 == 0)
             {
-                Console.WriteLine(this._players[_currentPlayerIndex] + " is not getting out of the penalty box");
-                this._players[_currentPlayerIndex].CantGetOutOfPenaltyBox();
+                Console.WriteLine(currentPlayer + " is not getting out of the penalty box");
+                currentPlayer.CantGetOutOfPenaltyBox();
                 return;
             }
 
-            if (this._players[_currentPlayerIndex].IsInPenaltyBox())
+            if (currentPlayer.IsInPenaltyBox())
             {
-                this._players[_currentPlayerIndex].MightGetOutOfPenaltyBox();
-                Console.WriteLine(this._players[_currentPlayerIndex] + " is getting out of the penalty box");
+                currentPlayer.MightGetOutOfPenaltyBox();
+                Console.WriteLine(currentPlayer + " is getting out of the penalty box");
             }
 
-            this._players[_currentPlayerIndex].Move(roll);
+            currentPlayer.Move(roll);
 
             Console.WriteLine("The category is " + this.CurrentCategory());
             Questions.Ask(this.CurrentCategory());
@@ -92,20 +93,21 @@ namespace Trivia
 
         public bool WasCorrectlyAnswered()
         {
-            if (this._players[_currentPlayerIndex].IsInPenaltyBox() && !this._players[_currentPlayerIndex].CanGetOutOfPenaltyBox())
+            var currentPlayer = this._players[_currentPlayerIndex];
+            if (currentPlayer.IsInPenaltyBox() && !currentPlayer.CanGetOutOfPenaltyBox())
             {
                 this.GiveTurnToNextPlayer();
                 return true;
             }
 
-            this._players[_currentPlayerIndex].TakeOutOfPenaltyBox();
+            currentPlayer.TakeOutOfPenaltyBox();
 
             Console.WriteLine("Answer was correct!!!!");
-            this._players[_currentPlayerIndex].AddPurse();
+            currentPlayer.AddPurse();
 
             this.GiveTurnToNextPlayer();
 
-            return this._players[_currentPlayerIndex].YetToWin();
+            return currentPlayer.YetToWin();
         }
 
         private void GiveTurnToNextPlayer()
@@ -116,9 +118,10 @@ namespace Trivia
 
         public bool WrongAnswer()
         {
+            var currentPlayer = this._players[_currentPlayerIndex];
             Console.WriteLine("Question was incorrectly answered");
-            Console.WriteLine(this._players[_currentPlayerIndex] + " was sent to the penalty box");
-            this._players[_currentPlayerIndex].PutInPenaltyBox();
+            Console.WriteLine(currentPlayer + " was sent to the penalty box");
+            currentPlayer.PutInPenaltyBox();
 
             this.GiveTurnToNextPlayer();
             return true;
