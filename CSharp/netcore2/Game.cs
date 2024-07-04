@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using trivia;
 
 namespace Trivia
@@ -9,23 +8,12 @@ namespace Trivia
     {
         private readonly List<Player> _players;
 
-        private LinkedList<string> popQuestions = new LinkedList<string>();
-        private LinkedList<string> scienceQuestions = new LinkedList<string>();
-        private LinkedList<string> sportsQuestions = new LinkedList<string>();
-        private LinkedList<string> rockQuestions = new LinkedList<string>();
-
         private int currentPlayer = 0;
 
         private Game()
         {
-            for (int i = 0; i < 50; i++)
-            {
-                popQuestions.AddLast("Pop Question " + i);
-                scienceQuestions.AddLast(("Science Question " + i));
-                sportsQuestions.AddLast(("Sports Question " + i));
-                rockQuestions.AddLast(CreateRockQuestion(i));
+            Questions.PrepareQuestions();
             }
-        }
 
         public Game(List<string> players) : this()
         {
@@ -44,11 +32,6 @@ namespace Trivia
             {
                 this.Add(player);
             }
-        }
-
-        private String CreateRockQuestion(int index)
-        {
-            return "Rock Question " + index;
         }
 
         public bool IsPlayable()
@@ -103,26 +86,7 @@ namespace Trivia
 
         private void AskQuestion()
         {
-            if (this.CurrentCategory() == "Pop")
-            {
-                Console.WriteLine(popQuestions.First());
-                popQuestions.RemoveFirst();
-            }
-            if (this.CurrentCategory() == "Science")
-            {
-                Console.WriteLine(scienceQuestions.First());
-                scienceQuestions.RemoveFirst();
-            }
-            if (this.CurrentCategory() == "Sports")
-            {
-                Console.WriteLine(sportsQuestions.First());
-                sportsQuestions.RemoveFirst();
-            }
-            if (this.CurrentCategory() == "Rock")
-            {
-                Console.WriteLine(rockQuestions.First());
-                rockQuestions.RemoveFirst();
-            }
+            Questions.Ask(this.CurrentCategory());
         }
 
 
