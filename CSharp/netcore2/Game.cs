@@ -51,12 +51,12 @@ namespace Trivia
 
         public void Roll(int roll)
         {
-            Console.WriteLine(this._players[currentPlayer].Name + " is the current player");
+            Console.WriteLine(this._players[currentPlayer] + " is the current player");
             Console.WriteLine("They have rolled a " + roll);
 
             if (this._players[currentPlayer].IsInPenaltyBox() && roll % 2 == 0)
             {
-                Console.WriteLine(this._players[currentPlayer].Name + " is not getting out of the penalty box");
+                Console.WriteLine(this._players[currentPlayer] + " is not getting out of the penalty box");
                 this._players[currentPlayer].CantGetOutOfPenaltyBox();
                 return;
             }
@@ -64,7 +64,7 @@ namespace Trivia
             if (this._players[currentPlayer].IsInPenaltyBox())
             {
                 this._players[currentPlayer].MightGetOutOfPenaltyBox();
-                Console.WriteLine(this._players[currentPlayer].Name + " is getting out of the penalty box");
+                Console.WriteLine(this._players[currentPlayer] + " is getting out of the penalty box");
             }
 
             this._players[currentPlayer].Move(roll);
@@ -117,7 +117,7 @@ namespace Trivia
         public bool WrongAnswer()
         {
             Console.WriteLine("Question was incorrectly answered");
-            Console.WriteLine(this._players[currentPlayer].Name + " was sent to the penalty box");
+            Console.WriteLine(this._players[currentPlayer] + " was sent to the penalty box");
             this._players[currentPlayer].PutInPenaltyBox();
 
             this.GiveTurnToNextPlayer();

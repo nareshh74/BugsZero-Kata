@@ -10,8 +10,6 @@ namespace trivia
         private bool _inPenaltyBox;
         private bool _isGettingOutOfPenaltyBox;
 
-        public string Name { get => this._name; }
-
         public Player(string name)
         {
             this._name = name;
@@ -19,6 +17,8 @@ namespace trivia
             this._purse = 0;
             this._inPenaltyBox = false;
         }
+
+        public override string ToString() => this._name;
 
         public bool IsInPenaltyBox()
         {
