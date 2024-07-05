@@ -4,46 +4,40 @@ using System.Linq;
 
 namespace trivia
 {
-    internal static class Questions
+    internal class QuestionsDeck
     {
-        private static LinkedList<string> popQuestions = new LinkedList<string>();
-        private static LinkedList<string> scienceQuestions = new LinkedList<string>();
-        private static LinkedList<string> sportsQuestions = new LinkedList<string>();
-        private static LinkedList<string> rockQuestions = new LinkedList<string>();
+        private static readonly Lazy<QuestionsDeck> _lazyValue = new Lazy<QuestionsDeck>(() => new QuestionsDeck());
+        private static QuestionsDeck _instance => QuestionsDeck._lazyValue.Value;
 
-        public static void PrepareQuestions()
+        public static QuestionsDeck GetQuestionsDeck() => QuestionsDeck._instance;
+
+        private Dictionary<string, QuestionList> _categoryToquestionListMap;
+
+        private QuestionsDeck()
         {
-            for (int i = 0; i < 50; i++)
+            this._categoryToquestionListMap = new Dictionary<string, QuestionList>();
+
+            PrepareQuestionsPercategory("Pop");
+            PrepareQuestionsPercategory("Science");
+            PrepareQuestionsPercategory("Sports");
+            PrepareQuestionsPercategory("Rock");
+
+            void PrepareQuestionsPercategory(string category)
             {
-                Questions.popQuestions.AddLast("Pop Question " + i);
-                Questions.scienceQuestions.AddLast(("Science Question " + i));
-                Questions.sportsQuestions.AddLast(("Sports Question " + i));
-                Questions.rockQuestions.AddLast("Rock Question " + i);
+                var questions = new List<string>();
+
+                for (int i = 0; i < 50; i++)
+                {
+                    questions.Add($"{category} Question " + i);
+                }
+
+                this._categoryToquestionListMap.Add(category, new QuestionList(questions));
             }
         }
 
-        public static void Ask(string questionCategory)
+        public void AskNextQuestionFromCategory(string questionCategory)
         {
-            if (questionCategory == "Pop")
-            {
-                Console.WriteLine(Questions.popQuestions.First());
-                Questions.popQuestions.RemoveFirst();
-            }
-            if (questionCategory == "Science")
-            {
-                Console.WriteLine(Questions.scienceQuestions.First());
-                Questions.scienceQuestions.RemoveFirst();
-            }
-            if (questionCategory == "Sports")
-            {
-                Console.WriteLine(Questions.sportsQuestions.First());
-                Questions.sportsQuestions.RemoveFirst();
-            }
-            if (questionCategory == "Rock")
-            {
-                Console.WriteLine(Questions.rockQuestions.First());
-                Questions.rockQuestions.RemoveFirst();
-            }
+            this._categoryToquestionListMap[questionCategory].AskNextQuestion();
         }
     }
 }

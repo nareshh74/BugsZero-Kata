@@ -7,12 +7,13 @@ namespace Trivia
     public class Game
     {
         private readonly List<Player> _players;
+        private readonly QuestionsDeck _questionsDeck;
 
         private int _currentPlayerIndex = 0;
 
         private Game()
         {
-            Questions.PrepareQuestions();
+            this._questionsDeck = QuestionsDeck.GetQuestionsDeck();
         }
 
         public Game(List<string> players) : this()
@@ -71,7 +72,7 @@ namespace Trivia
             currentPlayer.Move(roll);
 
             Console.WriteLine("The category is " + this.CurrentCategory());
-            Questions.Ask(this.CurrentCategory());
+            this._questionsDeck.AskNextQuestionFromCategory(this.CurrentCategory());
 
         }
 
