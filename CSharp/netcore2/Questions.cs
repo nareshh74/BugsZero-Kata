@@ -11,18 +11,20 @@ namespace trivia
 
         public static QuestionsDeck GetQuestionsDeck() => QuestionsDeck._instance;
 
-        private Dictionary<string, QuestionList> _categoryToquestionListMap;
+        private readonly Dictionary<string, QuestionList> _categoryToquestionListMap;
+        private readonly List<string> _categoryList;
 
         private QuestionsDeck()
         {
             this._categoryToquestionListMap = new Dictionary<string, QuestionList>();
+            this._categoryList = new List<string>();
 
-            PrepareQuestionsPercategory("Pop");
-            PrepareQuestionsPercategory("Science");
-            PrepareQuestionsPercategory("Sports");
-            PrepareQuestionsPercategory("Rock");
+            PrepareQuestionsForcategory("Pop");
+            PrepareQuestionsForcategory("Science");
+            PrepareQuestionsForcategory("Sports");
+            PrepareQuestionsForcategory("Rock");
 
-            void PrepareQuestionsPercategory(string category)
+            void PrepareQuestionsForcategory(string category)
             {
                 var questions = new List<string>();
 
@@ -32,12 +34,20 @@ namespace trivia
                 }
 
                 this._categoryToquestionListMap.Add(category, new QuestionList(questions));
+                this._categoryList.Add(category);
             }
         }
 
-        public void AskNextQuestionFromCategory(string questionCategory)
+        public void AskQuestionForPlayer(Player player)
         {
-            this._categoryToquestionListMap[questionCategory].AskNextQuestion();
+            this._categoryToquestionListMap[GetQuestionCategoryForPlayer()].AskNextQuestion();
+
+            string GetQuestionCategoryForPlayer()
+            {
+                var place = player.GetPlace() % this._categoryToquestionListMap.Count;
+                this._categoryToquestionListMap.Keys.ElementAt(place);
+                return this._categoryList[place];
+            }
         }
     }
 }

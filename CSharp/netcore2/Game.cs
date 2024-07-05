@@ -72,7 +72,7 @@ namespace Trivia
             currentPlayer.Move(roll);
 
             Console.WriteLine("The category is " + this.CurrentCategory());
-            this._questionsDeck.AskNextQuestionFromCategory(this.CurrentCategory());
+            this._questionsDeck.AskQuestionForPlayer(currentPlayer);
 
         }
 
