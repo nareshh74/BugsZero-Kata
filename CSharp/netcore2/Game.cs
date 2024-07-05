@@ -11,12 +11,7 @@ namespace Trivia
 
         private int _currentPlayerIndex = 0;
 
-        private Game()
-        {
-            this._questionsDeck = QuestionsDeck.GetQuestionsDeck();
-        }
-
-        public Game(List<string> players) : this()
+        public Game(List<string> players)
         {
             if (players.Count < 2)
             {
@@ -33,6 +28,8 @@ namespace Trivia
             {
                 this.Add(player);
             }
+
+            this._questionsDeck = QuestionsDeck.GetQuestionsDeck();
         }
 
         public bool IsPlayable()
